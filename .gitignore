@@ -29,5 +29,7 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### VS Code ###
-.vscode/
+### SECRETS — ne jamais commiter ###
+.env
+*.env
+!.env.example     # Exception : le template vide est OK

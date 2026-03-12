@@ -1,6 +1,9 @@
 package com.chatop.api.service;
 
 import com.chatop.api.dto.MessageDTO;
+import com.chatop.api.exception.BadRequestException;
+import com.chatop.api.exception.RentalNotFoundException;
+import com.chatop.api.exception.UserNotFoundException;
 import com.chatop.api.model.Message;
 import com.chatop.api.repository.MessageRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,11 +20,14 @@ public class MessageService {
     private final UserService userService;
 
     public Message createMessage( MessageDTO dto){
+        if (dto.getRentalId() == null || dto.getUserId() == null || dto.getMessage() == null || dto.getMessage().isBlank()){
+            throw new BadRequestException();
+        }
         Message message = new Message();
         message.setRental(rentalService.getRental(dto.getRentalId())
-                .orElseThrow(() -> new RuntimeException("Rental not found")));
+                .orElseThrow(RentalNotFoundException::new));
         message.setUser(userService.getUser(dto.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found")));
+                .orElseThrow(UserNotFoundException::new));
         message.setMessage(dto.getMessage());
         message.setCreatedAt(LocalDateTime.now());
         message.setUpdatedAt(LocalDateTime.now());

@@ -1,6 +1,8 @@
 package com.chatop.api.service;
 
 import com.chatop.api.dto.RentalDTO;
+import com.chatop.api.exception.BadRequestException;
+import com.chatop.api.exception.RentalNotFoundException;
 import com.chatop.api.model.Rental;
 import com.chatop.api.repository.RentalRepository;
 
@@ -25,7 +27,20 @@ public class RentalService {
         return rentalRepository.findById(id);
     }
 
+    private void validateRentalDTO(RentalDTO dto) {
+        if (dto.getName() == null || dto.getName().isBlank() ||
+                dto.getSurface() == null ||
+                dto.getPrice() == null ||
+                dto.getPicture() == null || dto.getPicture().isBlank() ||
+                dto.getDescription() == null || dto.getDescription().isBlank()) {
+            throw new BadRequestException();
+        }
+    }
+
     public Rental createRental(RentalDTO dto){
+
+        validateRentalDTO(dto);
+
         Rental rental = new Rental();
         rental.setName(dto.getName());
         rental.setSurface(dto.getSurface());
@@ -39,6 +54,9 @@ public class RentalService {
     }
 
     public Rental updateRental(Long id, RentalDTO dto){
+
+        validateRentalDTO(dto);
+
         return rentalRepository.findById(id)
                 .map(existingRental -> {
                     existingRental.setName(dto.getName());
@@ -47,7 +65,7 @@ public class RentalService {
                     existingRental.setDescription(dto.getDescription());
                     return rentalRepository.save(existingRental);
                 }
-                ).orElseThrow(() -> new RuntimeException("Rental not found"));
+                ).orElseThrow(RentalNotFoundException::new);
     }
 
 }

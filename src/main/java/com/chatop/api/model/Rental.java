@@ -24,8 +24,8 @@ public class Rental {
     private String description;
 
     @ManyToOne
-    @Column(name = "owner_id")
-    private Integer ownerId;
+    @JoinColumn(name = "owner_id")
+    private User ownerId;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

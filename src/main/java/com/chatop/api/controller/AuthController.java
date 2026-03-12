@@ -1,6 +1,7 @@
 package com.chatop.api.controller;
 
 import com.chatop.api.dto.LoginDTO;
+import com.chatop.api.dto.TokenDTO;
 import com.chatop.api.dto.UserDTO;
 import com.chatop.api.model.User;
 import com.chatop.api.service.AuthService;
@@ -18,16 +19,19 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public User register(@RequestBody UserDTO dto){
-        return authService.register(dto);
+    public TokenDTO  register(@RequestBody UserDTO dto){
+
+        return new TokenDTO(authService.register(dto));
     }
+
     @GetMapping("/me")
-    public Optional<User> getMyUser(){
+    public User getMyUser(){
+
         return authService.getMyUser();
     }
+
     @PostMapping("/login")
-    public User login (@RequestBody LoginDTO dto){
-        return authService.login(dto);
-        // TODO on remplacera User par un token JWT plus tard
+    public TokenDTO login (@RequestBody LoginDTO dto){
+        return new TokenDTO(authService.login(dto));
     }
 }

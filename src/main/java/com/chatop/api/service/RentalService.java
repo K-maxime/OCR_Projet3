@@ -3,10 +3,14 @@ package com.chatop.api.service;
 import com.chatop.api.dto.RentalDTO;
 import com.chatop.api.exception.BadRequestException;
 import com.chatop.api.exception.RentalNotFoundException;
+import com.chatop.api.exception.UserNotFoundException;
 import com.chatop.api.model.Rental;
+import com.chatop.api.model.User;
 import com.chatop.api.repository.RentalRepository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,6 +22,9 @@ import java.util.Optional;
 public class RentalService {
 
     private final RentalRepository rentalRepository;
+    private final UserService userService;
+
+
 
     public List<Rental> getRentals(){
         return rentalRepository.findAll();
@@ -41,11 +48,17 @@ public class RentalService {
 
         validateRentalDTO(dto);
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User owner = userService.findByEmail(email)
+                .orElseThrow(UserNotFoundException::new);
+
         Rental rental = new Rental();
         rental.setName(dto.getName());
         rental.setSurface(dto.getSurface());
         rental.setPrice(dto.getPrice());
         rental.setPicture(dto.getPicture());
+        rental.setOwnerId(owner);
         rental.setDescription(dto.getDescription());
         rental.setCreatedAt(LocalDateTime.now());
         rental.setUpdatedAt(LocalDateTime.now());

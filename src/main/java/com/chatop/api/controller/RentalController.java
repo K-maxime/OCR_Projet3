@@ -1,5 +1,6 @@
 package com.chatop.api.controller;
 
+import com.chatop.api.dto.RentalDTO;
 import com.chatop.api.model.Rental;
 import com.chatop.api.service.RentalService;
 import lombok.RequiredArgsConstructor;
@@ -26,14 +27,12 @@ public class RentalController {
     }
 
     @PostMapping
-    //TODO faire un DTO pour adapter les données utilisateur en données pour l'entité
-    public Rental createRental(@RequestBody Rental rental){
-        return rentalService.createRental(rental);
+    public Rental createRental(@RequestBody RentalDTO dto){
+        return rentalService.createRental(dto);
     }
 
     @PutMapping("/{id}")
-    //TODO faire un DTO pour adapter les données utilisateur en données pour l'entité
-    public Rental updateRental(@PathVariable long id, @RequestBody Rental rental){
-        return rentalService.updateRental(id, rental);
+    public Rental updateRental(@PathVariable long id, @RequestBody RentalDTO dto){
+        return rentalService.updateRental(id, dto);
     }
 }

@@ -1,5 +1,7 @@
 package com.chatop.api.controller;
 
+import com.chatop.api.dto.LoginDTO;
+import com.chatop.api.dto.UserDTO;
 import com.chatop.api.model.User;
 import com.chatop.api.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -15,20 +17,17 @@ public class AuthController {
 
     private final AuthService authService;
 
-
     @PostMapping("/register")
-    //TODO faire un DTO pour adapter les données utilisateur en données pour l'entité
-    public User register(@RequestBody User user){
-        return authService.register(user);
+    public User register(@RequestBody UserDTO dto){
+        return authService.register(dto);
     }
     @GetMapping("/me")
     public Optional<User> getMyUser(){
         return authService.getMyUser();
     }
     @PostMapping("/login")
-    //TODO faire un DTO pour adapter les données utilisateur en données pour l'entité
-    public User login (@RequestBody User user){
-        return authService.login(user);
+    public User login (@RequestBody LoginDTO dto){
+        return authService.login(dto);
         // TODO on remplacera User par un token JWT plus tard
     }
 }

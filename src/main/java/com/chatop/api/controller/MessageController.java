@@ -1,5 +1,6 @@
 package com.chatop.api.controller;
 
+import com.chatop.api.dto.MessageDTO;
 import com.chatop.api.model.Message;
 import com.chatop.api.service.MessageService;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +18,7 @@ public class MessageController {
     private final MessageService messageService;
 
     @PostMapping
-    //TODO faire un DTO pour adapter les données utilisateur en données pour l'entité
-    public Message createMessage(@RequestBody Message message){
-        return messageService.createMessage(message);
+    public Message createMessage(@RequestBody MessageDTO dto){
+        return messageService.createMessage(dto);
     }
 }

@@ -8,7 +8,6 @@ import com.chatop.api.exception.UserNotFoundException;
 import com.chatop.api.model.Rental;
 import com.chatop.api.model.User;
 import com.chatop.api.repository.RentalRepository;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,20 +25,20 @@ public class RentalService {
     private final RentalRepository rentalRepository;
     private final UserService userService;
 
-    public List<RentalResponseDTO> getRentals(){
+    public List<RentalResponseDTO> getRentals() {
         return rentalRepository.findAll()
                 .stream()
                 .map(this::toResponseDTO)
                 .collect(Collectors.toList());
     }
 
-    public RentalResponseDTO getRental(Long id){
+    public RentalResponseDTO getRental(Long id) {
         return rentalRepository.findById(id)
                 .map(this::toResponseDTO)
                 .orElseThrow(RentalNotFoundException::new);
     }
 
-    public Optional<Rental> findRentalEntityById(Long id){
+    public Optional<Rental> findRentalEntityById(Long id) {
         return rentalRepository.findById(id);
     }
 
@@ -53,7 +52,7 @@ public class RentalService {
         }
     }
 
-    public void createRental(RentalDTO dto){
+    public void createRental(RentalDTO dto) {
 
         validateRentalDTO(dto);
 
@@ -75,19 +74,19 @@ public class RentalService {
         rentalRepository.save(rental);
     }
 
-    public void updateRental(Long id, RentalDTO dto){
+    public void updateRental(Long id, RentalDTO dto) {
 
         validateRentalDTO(dto);
 
         rentalRepository.findById(id)
-            .map(existingRental -> {
-                existingRental.setName(dto.getName());
-                existingRental.setSurface(dto.getSurface());
-                existingRental.setPrice(dto.getPrice());
-                existingRental.setDescription(dto.getDescription());
-                return rentalRepository.save(existingRental);
-            }
-            ).orElseThrow(RentalNotFoundException::new);
+                .map(existingRental -> {
+                            existingRental.setName(dto.getName());
+                            existingRental.setSurface(dto.getSurface());
+                            existingRental.setPrice(dto.getPrice());
+                            existingRental.setDescription(dto.getDescription());
+                            return rentalRepository.save(existingRental);
+                        }
+                ).orElseThrow(RentalNotFoundException::new);
     }
 
     private RentalResponseDTO toResponseDTO(Rental rental) {

@@ -25,7 +25,7 @@ public class RentalController {
     @ApiResponse(responseCode = "400", description = "Données invalides")
     @ApiResponse(responseCode = "401", description = "Non authentifié")
     @GetMapping
-    public List<RentalResponseDTO> getRentals(){
+    public List<RentalResponseDTO> getRentals() {
         return rentalService.getRentals();
     }
 
@@ -34,7 +34,7 @@ public class RentalController {
     @ApiResponse(responseCode = "400", description = "Données invalides")
     @ApiResponse(responseCode = "401", description = "Non authentifié")
     @GetMapping("/{id}")
-    public RentalResponseDTO getRental(@PathVariable long id){
+    public RentalResponseDTO getRental(@PathVariable long id) {
         return rentalService.getRental(id);
     }
 
@@ -43,7 +43,7 @@ public class RentalController {
     @ApiResponse(responseCode = "400", description = "Données invalides")
     @ApiResponse(responseCode = "401", description = "Non authentifié")
     @PostMapping
-    public Map<String, String>  createRental(@RequestBody RentalDTO dto){
+    public Map<String, String> createRental(@RequestBody RentalDTO dto) {
         rentalService.createRental(dto);
         return Map.of("message", "Rental created !");
     }
@@ -53,7 +53,7 @@ public class RentalController {
     @ApiResponse(responseCode = "400", description = "Données invalides")
     @ApiResponse(responseCode = "401", description = "Non authentifié")
     @PutMapping("/{id}")
-    public  Map<String, String> updateRental(@PathVariable long id, @RequestBody RentalDTO dto){
+    public Map<String, String> updateRental(@PathVariable long id, @RequestBody RentalDTO dto) {
         rentalService.updateRental(id, dto);
         return Map.of("message", "Rental updated !");
     }

@@ -11,7 +11,7 @@ public class UserResponseDTO {
     private String name;
     private String email;
     @JsonProperty("created_at")
-    private LocalDateTime  createdAt;
+    private LocalDateTime createdAt;
     @JsonProperty("updated_at")
     private LocalDateTime updatedAt;
 

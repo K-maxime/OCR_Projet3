@@ -1,6 +1,5 @@
 package com.chatop.api.dto;
 
-import com.chatop.api.model.Rental;
 import lombok.Data;
 
 @Data

@@ -8,7 +8,6 @@ import com.chatop.api.exception.BadRequestException;
 import com.chatop.api.exception.InvalidCredentialsException;
 import com.chatop.api.exception.UserNotFoundException;
 import com.chatop.api.model.User;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,10 +26,9 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
 
 
-
-    public String register(UserDTO dto){
+    public String register(UserDTO dto) {
         if (dto.getEmail() == null || dto.getName() == null || dto.getPassword() == null ||
-                dto.getEmail().isBlank() || dto.getName().isBlank() || dto.getPassword().isBlank()){
+                dto.getEmail().isBlank() || dto.getName().isBlank() || dto.getPassword().isBlank()) {
             throw new BadRequestException();
         }
         User user = new User();
@@ -43,7 +41,7 @@ public class AuthService {
         return jwtService.generateToken(savedUser);
     }
 
-    public UserResponseDTO getMyUser(){
+    public UserResponseDTO getMyUser() {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
@@ -64,7 +62,7 @@ public class AuthService {
 
     public String login(LoginDTO dto) {
         if (dto.getEmail() == null || dto.getPassword() == null ||
-                dto.getEmail().isBlank() || dto.getPassword().isBlank()){
+                dto.getEmail().isBlank() || dto.getPassword().isBlank()) {
             throw new BadRequestException();
         }
         String email = dto.getEmail();

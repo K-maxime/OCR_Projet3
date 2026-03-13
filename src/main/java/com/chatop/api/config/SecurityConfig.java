@@ -1,6 +1,5 @@
 package com.chatop.api.config;
 
-import com.chatop.api.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

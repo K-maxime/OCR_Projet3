@@ -1,7 +1,7 @@
 package com.chatop.api.exception;
 
 public class UserNotFoundException extends RuntimeException {
-    public UserNotFoundException(){
+    public UserNotFoundException() {
         super("User not found");
     }
 }

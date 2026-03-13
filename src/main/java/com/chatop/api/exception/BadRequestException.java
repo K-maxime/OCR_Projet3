@@ -1,7 +1,7 @@
 package com.chatop.api.exception;
 
-public class BadRequestException extends RuntimeException{
-    public BadRequestException(){
+public class BadRequestException extends RuntimeException {
+    public BadRequestException() {
         super("Bad request");
     }
 }

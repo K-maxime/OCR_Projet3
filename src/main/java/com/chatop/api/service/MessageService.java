@@ -19,8 +19,8 @@ public class MessageService {
     private final RentalService rentalService;
     private final UserService userService;
 
-    public void createMessage( MessageDTO dto){
-        if (dto.getRentalId() == null || dto.getUserId() == null || dto.getMessage() == null || dto.getMessage().isBlank()){
+    public void createMessage(MessageDTO dto) {
+        if (dto.getRentalId() == null || dto.getUserId() == null || dto.getMessage() == null || dto.getMessage().isBlank()) {
             throw new BadRequestException();
         }
         Message message = new Message();

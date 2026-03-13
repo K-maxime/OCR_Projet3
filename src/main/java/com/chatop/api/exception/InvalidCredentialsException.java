@@ -1,7 +1,7 @@
 package com.chatop.api.exception;
 
 public class InvalidCredentialsException extends RuntimeException {
-    public InvalidCredentialsException(){
+    public InvalidCredentialsException() {
         super("Invalid credentials");
     }
 }

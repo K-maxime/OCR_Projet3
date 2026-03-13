@@ -4,7 +4,6 @@ import com.chatop.api.dto.UserResponseDTO;
 import com.chatop.api.exception.UserNotFoundException;
 import com.chatop.api.model.User;
 import com.chatop.api.repository.UserRepository;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,11 +24,11 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(UserNotFoundException::new);
     }
 
-    public List<User> getUsers(){
+    public List<User> getUsers() {
         return userRepository.findAll();
     }
 
-    public UserResponseDTO getUser(Long id){
+    public UserResponseDTO getUser(Long id) {
         return userRepository.findById(id)
                 .map(this::toUserResponseDTO)
                 .orElseThrow(UserNotFoundException::new);
@@ -46,10 +45,11 @@ public class UserService implements UserDetailsService {
         return userResponseDTO;
     }
 
-    public Optional<User> findUserEntityById(Long id){
+    public Optional<User> findUserEntityById(Long id) {
         return userRepository.findById(id);
     }
-    public User createUser(User user){
+
+    public User createUser(User user) {
         return userRepository.save(user);
     }
 

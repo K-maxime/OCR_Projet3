@@ -1,13 +1,13 @@
 package com.chatop.api.controller;
 
 import com.chatop.api.dto.RentalDTO;
-import com.chatop.api.model.Rental;
+import com.chatop.api.dto.RentalResponseDTO;
 import com.chatop.api.service.RentalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -17,22 +17,24 @@ public class RentalController {
     private final RentalService rentalService;
 
     @GetMapping
-    public List<Rental> getRentals(){
+    public List<RentalResponseDTO> getRentals(){
         return rentalService.getRentals();
     }
 
     @GetMapping("/{id}")
-    public Optional<Rental> getRental(@PathVariable long id){
+    public RentalResponseDTO getRental(@PathVariable long id){
         return rentalService.getRental(id);
     }
 
     @PostMapping
-    public Rental createRental(@RequestBody RentalDTO dto){
-        return rentalService.createRental(dto);
+    public Map<String, String>  createRental(@RequestBody RentalDTO dto){
+        rentalService.createRental(dto);
+        return Map.of("message", "Rental created !");
     }
 
     @PutMapping("/{id}")
-    public Rental updateRental(@PathVariable long id, @RequestBody RentalDTO dto){
-        return rentalService.updateRental(id, dto);
+    public  Map<String, String> updateRental(@PathVariable long id, @RequestBody RentalDTO dto){
+        rentalService.updateRental(id, dto);
+        return Map.of("message", "Rental updated !");
     }
 }

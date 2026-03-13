@@ -1,5 +1,6 @@
 package com.chatop.api.service;
 
+import com.chatop.api.dto.UserResponseDTO;
 import com.chatop.api.exception.UserNotFoundException;
 import com.chatop.api.model.User;
 import com.chatop.api.repository.UserRepository;
@@ -27,7 +28,25 @@ public class UserService implements UserDetailsService {
     public List<User> getUsers(){
         return userRepository.findAll();
     }
-    public Optional<User> getUser(Long id){
+
+    public UserResponseDTO getUser(Long id){
+        return userRepository.findById(id)
+                .map(this::toUserResponseDTO)
+                .orElseThrow(UserNotFoundException::new);
+    }
+
+    private UserResponseDTO toUserResponseDTO(User user) {
+        UserResponseDTO userResponseDTO = new UserResponseDTO();
+        userResponseDTO.setId(user.getId());
+        userResponseDTO.setName(user.getName());
+        userResponseDTO.setEmail(user.getEmail());
+        userResponseDTO.setCreatedAt(user.getCreatedAt());
+        userResponseDTO.setUpdatedAt(user.getUpdatedAt());
+
+        return userResponseDTO;
+    }
+
+    public Optional<User> findUserEntityById(Long id){
         return userRepository.findById(id);
     }
     public User createUser(User user){

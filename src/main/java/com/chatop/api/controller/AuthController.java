@@ -3,13 +3,11 @@ package com.chatop.api.controller;
 import com.chatop.api.dto.LoginDTO;
 import com.chatop.api.dto.TokenDTO;
 import com.chatop.api.dto.UserDTO;
-import com.chatop.api.model.User;
+import com.chatop.api.dto.UserResponseDTO;
 import com.chatop.api.service.AuthService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -25,7 +23,7 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    public User getMyUser(){
+    public UserResponseDTO getMyUser(){
 
         return authService.getMyUser();
     }

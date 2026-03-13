@@ -3,6 +3,7 @@ package com.chatop.api.service;
 
 import com.chatop.api.dto.LoginDTO;
 import com.chatop.api.dto.UserDTO;
+import com.chatop.api.dto.UserResponseDTO;
 import com.chatop.api.exception.BadRequestException;
 import com.chatop.api.exception.InvalidCredentialsException;
 import com.chatop.api.exception.UserNotFoundException;
@@ -15,8 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -44,13 +43,23 @@ public class AuthService {
         return jwtService.generateToken(savedUser);
     }
 
-    public User getMyUser(){
+    public UserResponseDTO getMyUser(){
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
 
-        return userService.findByEmail(email)
+        User myUser = userService.findByEmail(email)
                 .orElseThrow(UserNotFoundException::new);
+
+        UserResponseDTO userResponse = new UserResponseDTO();
+
+        userResponse.setId(myUser.getId());
+        userResponse.setName(myUser.getName());
+        userResponse.setEmail(myUser.getEmail());
+        userResponse.setCreatedAt(myUser.getCreatedAt());
+        userResponse.setUpdatedAt(myUser.getUpdatedAt());
+
+        return userResponse;
     }
 
     public String login(LoginDTO dto) {

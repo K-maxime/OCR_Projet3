@@ -19,19 +19,19 @@ public class MessageService {
     private final RentalService rentalService;
     private final UserService userService;
 
-    public Message createMessage( MessageDTO dto){
+    public void createMessage( MessageDTO dto){
         if (dto.getRentalId() == null || dto.getUserId() == null || dto.getMessage() == null || dto.getMessage().isBlank()){
             throw new BadRequestException();
         }
         Message message = new Message();
-        message.setRental(rentalService.getRental(dto.getRentalId())
+        message.setRental(rentalService.findRentalEntityById(dto.getRentalId())
                 .orElseThrow(RentalNotFoundException::new));
-        message.setUser(userService.getUser(dto.getUserId())
+        message.setUser(userService.findUserEntityById(dto.getUserId())
                 .orElseThrow(UserNotFoundException::new));
         message.setMessage(dto.getMessage());
         message.setCreatedAt(LocalDateTime.now());
         message.setUpdatedAt(LocalDateTime.now());
 
-        return messageRepository.save(message);
+        messageRepository.save(message);
     }
 }
